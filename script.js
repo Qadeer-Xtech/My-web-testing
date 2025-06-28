@@ -8,22 +8,27 @@ document.addEventListener('DOMContentLoaded', function() {
         hamburger.classList.toggle('toggle');
     });
 
-    // --- DARK MODE TOGGLE ---
+    // --- DARK MODE TOGGLE (NOW IN HEADER) ---
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     darkModeToggle.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
     });
 
+    // --- NEW: LOAD RANDOM PHOTO ---
+    const randomPhoto = document.getElementById('random-photo');
+    // We use picsum.photos to get a random image. The query string ensures we get a new one each time.
+    randomPhoto.src = 'https://picsum.photos/400/250?random=' + new Date().getTime();
+
+
     // --- TEXT COPIER BUTTON ---
     const copyTextBtn = document.getElementById('copy-text-btn');
     copyTextBtn.addEventListener('click', () => {
         const textToCopy = document.getElementById('text-to-copy');
-        textToCopy.select(); // Select the text
-        document.execCommand('copy'); // Copy to clipboard (older method, but great fallback)
-        
-        // Modern method: navigator.clipboard.writeText(textToCopy.value);
-        
-        alert("Text copied to clipboard!");
+        navigator.clipboard.writeText(textToCopy.value).then(() => {
+            alert("Text copied to clipboard!");
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+        });
     });
 
     // --- TIKTOK DOWNLOADER (DEMO) BUTTON ---
@@ -38,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // --- BACK TO TOP BUTTON ---
+    // (This code remains the same)
     const backToTopButton = document.getElementById("back-to-top-btn");
     window.onscroll = function() {
         if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
@@ -51,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // --- FORM SUBMISSION ---
+    // (This code remains the same)
     const form = document.querySelector('form');
     form.addEventListener('submit', function(e) {
         e.preventDefault(); 
@@ -63,3 +70,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
