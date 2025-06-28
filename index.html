@@ -19,6 +19,7 @@
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#tools">Tools</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -27,14 +28,37 @@
     <main>
         <section id="home">
             <h2>Home</h2>
-            <p>This is the main content area of my web page. Welcome! We've now added some new features. The navigation bar is now responsive and you'll see a 'Back to Top' button when you scroll down.</p>
-            <p style="padding-bottom: 500px;">(Some extra content here to make the page long enough to scroll.)</p>
+            <p>This is the main content area of my web page. We've now added a new 'Tools' section with some interactive buttons!</p>
+            <p style="padding-bottom: 300px;">(Some extra content here to make the page long enough to scroll.)</p>
         </section>
 
         <section id="about">
             <h2>About Me</h2>
             <p>Here is a little bit of information about myself and the purpose of this website.</p>
             <img src="https://via.placeholder.com/400x200" alt="A placeholder image" style="max-width: 100%; height: auto;">
+        </section>
+
+        <section id="tools">
+            <h2>Feature Buttons</h2>
+            <div class="tool-container">
+                <h3>Dark Mode</h3>
+                <p>Switch between light and dark themes.</p>
+                <button id="dark-mode-toggle">Toggle Dark Mode</button>
+            </div>
+
+            <div class="tool-container">
+                <h3>Text Copier</h3>
+                <p>Click the button to copy the text below.</p>
+                <input type="text" id="text-to-copy" value="This text is ready to be copied!" readonly>
+                <button id="copy-text-btn">Copy Text</button>
+            </div>
+
+            <div class="tool-container">
+                <h3>TikTok Video Downloader (UI Demo)</h3>
+                <p>Paste a TikTok URL below. (This is a front-end demonstration only).</p>
+                <input type="text" id="tiktok-url" placeholder="Paste TikTok URL here...">
+                <button id="tiktok-download-btn">Download</button>
+            </div>
         </section>
 
         <section id="contact">
