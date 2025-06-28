@@ -1,47 +1,175 @@
-document.addEventListener('DOMContentLoaded', function() {
+/* General Body Styles */
+html {
+    scroll-behavior: smooth; /* Enables smooth scrolling for the whole page */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header and Navigation */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 2rem; /* Added more padding */
+    text-align: center;
+    display: flex; /* Using Flexbox for alignment */
+    justify-content: space-between; /* Puts space between logo and nav */
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.nav-links {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.nav-links li {
+    display: inline;
+    margin-left: 20px; /* Changed to margin-left */
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.hamburger-menu {
+    display: none; /* Hidden on desktop */
+    cursor: pointer;
+}
+
+.hamburger-menu div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+/* Main Content and Sections */
+main {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+section {
+    margin-bottom: 20px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* Form Styling */
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    box-sizing: border-box; /* Fixes padding issue */
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+button {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+/* Back to Top Button */
+#back-to-top-btn {
+    display: none; /* Hidden by default */
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: #555;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 50%; /* Makes it a circle */
+    width: 50px;
+    height: 50px;
+}
+
+#back-to-top-btn:hover {
+    background-color: #007BFF;
+}
+
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+}
+
+
+/* =================================== */
+/* RESPONSIVE DESIGN (MOBILE)     */
+/* =================================== */
+@media screen and (max-width: 768px) {
+    header {
+        text-align: left;
+    }
+
+    .nav-links {
+        position: fixed;
+        right: -100%; /* Start off-screen */
+        top: 80px; /* Position below header */
+        background-color: #333;
+        height: auto;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        transition: right 0.3s ease-in-out;
+        display: flex; /* Stack links vertically */
+    }
     
-    // --- RESPONSIVE NAVIGATION MENU ---
-    const hamburger = document.querySelector('.hamburger-menu');
-    const navLinks = document.querySelector('.nav-links');
+    .nav-links.nav-active {
+        right: 0; /* Slide in */
+    }
 
-    hamburger.addEventListener('click', () => {
-        // Toggle Nav
-        navLinks.classList.toggle('nav-active');
-
-        // Animate Hamburger
-        hamburger.classList.toggle('toggle');
-    });
-
-
-    // --- BACK TO TOP BUTTON ---
-    const backToTopButton = document.getElementById("back-to-top-btn");
-
-    // Show the button when the user scrolls down 200px from the top
-    window.onscroll = function() {
-        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-            backToTopButton.style.display = "block";
-        } else {
-            backToTopButton.style.display = "none";
-        }
-    };
-
-    // When the user clicks on the button, scroll to the top of the document
-    backToTopButton.addEventListener('click', () => {
-        document.body.scrollTop = 0; // For Safari
-        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-    });
-
-
-    // --- FORM SUBMISSION (from previous version) ---
-    const form = document.querySelector('form');
-    form.addEventListener('submit', function(e) {
-        e.preventDefault(); 
-        const name = document.getElementById('name').value;
-        if (name) { // Only show alert if a name is entered
-            alert(`Thank you for your message, ${name}!`);
-            form.reset();
-        } else {
-            alert('Please enter your name.');
-        }
-    });
-});
+    .nav-links li {
+        margin: 20px 0;
+    }
+    
+    .hamburger-menu {
+        display: block; /* Show hamburger on mobile */
+    }
+    
+    .hamburger-menu.toggle .line1 {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+    .hamburger-menu.toggle .line2 {
+        opacity: 0;
+    }
+    .hamburger-menu.toggle .line3 {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+}
