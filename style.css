@@ -16,11 +16,13 @@ body {
 header {
     background-color: #333;
     color: #fff;
-    padding: 1rem 2rem; /* Added more padding */
-    text-align: center;
-    display: flex; /* Using Flexbox for alignment */
-    justify-content: space-between; /* Puts space between logo and nav */
+    padding: 1rem 2rem; 
+    display: flex; 
+    justify-content: space-between; 
     align-items: center;
+    position: sticky; /* Makes the header stick to the top */
+    top: 0;
+    z-index: 100; /* Ensures header is above other content */
 }
 
 header h1 {
@@ -36,7 +38,7 @@ header h1 {
 
 .nav-links li {
     display: inline;
-    margin-left: 20px; /* Changed to margin-left */
+    margin-left: 20px; 
 }
 
 .nav-links a {
@@ -77,7 +79,7 @@ input[type="text"],
 input[type="email"],
 textarea {
     width: 100%;
-    box-sizing: border-box; /* Fixes padding issue */
+    box-sizing: border-box; 
     padding: 8px;
     margin-bottom: 10px;
     border-radius: 4px;
@@ -99,7 +101,7 @@ button:hover {
 
 /* Back to Top Button */
 #back-to-top-btn {
-    display: none; /* Hidden by default */
+    display: none; 
     position: fixed;
     bottom: 20px;
     right: 30px;
@@ -111,7 +113,7 @@ button:hover {
     color: white;
     cursor: pointer;
     padding: 15px;
-    border-radius: 50%; /* Makes it a circle */
+    border-radius: 50%; 
     width: 50px;
     height: 50px;
 }
@@ -131,38 +133,56 @@ footer {
 
 
 /* =================================== */
-/* RESPONSIVE DESIGN (MOBILE)     */
+/* RESPONSIVE DESIGN (MOBILE)          */
 /* =================================== */
 @media screen and (max-width: 768px) {
-    header {
-        text-align: left;
+    body.nav-open {
+        overflow: hidden; /* Prevent scrolling when mobile menu is open */
     }
 
     .nav-links {
+        /* This is the container for the 3 buttons */
         position: fixed;
-        right: -100%; /* Start off-screen */
-        top: 80px; /* Position below header */
-        background-color: #333;
-        height: auto;
+        top: -100px; /* Start hidden above the screen */
+        left: 0;
         width: 100%;
-        flex-direction: column;
-        align-items: center;
-        transition: right 0.3s ease-in-out;
-        display: flex; /* Stack links vertically */
+        background-color: #444; /* A slightly different background */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        display: flex;
+        justify-content: space-around; /* Evenly space the buttons */
+        padding: 15px 0;
+        transition: top 0.3s ease-in-out;
+        z-index: 90; /* Below the header but above content */
     }
     
     .nav-links.nav-active {
-        right: 0; /* Slide in */
+        top: 80px; /* Slide down to be visible just below the header */
     }
 
     .nav-links li {
-        margin: 20px 0;
+        margin: 0; /* Remove margin from list items */
+    }
+
+    /* This styles the links to look like buttons */
+    .nav-links a {
+        background-color: #007BFF;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+        background-color: #0056b3;
     }
     
     .hamburger-menu {
         display: block; /* Show hamburger on mobile */
     }
     
+    /* This animates the hamburger icon into an 'X' */
     .hamburger-menu.toggle .line1 {
         transform: rotate(-45deg) translate(-5px, 6px);
     }
