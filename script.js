@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 1. Go to a site like RapidAPI.com and search for "TikTok Downloader".
         // 2. Subscribe to a free API.
         // 3. Get your 'X-RapidAPI-Key' and paste it below.
-        const apiKey = 'YOUR_API_KEY_HERE'; // <-- PASTE YOUR KEY HERE
+        const apiKey = 'AIzaSyDPO1sHoIozWOOx5Ie2qE6OH-7LKI0f228'; // <-- PASTE YOUR KEY HERE
 
         // This example uses the "TikTok Video Downloader" API from RapidAPI
         const apiHost = 'tiktok-video-downloader-unofficial.p.rapidapi.com';
