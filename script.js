@@ -1,97 +1,43 @@
-document.addEventListener('DOMContentLoaded', function() {
-    
-    // --- FULLSCREEN NAVIGATION MENU ---
-    const hamburger = document.querySelector('.hamburger-menu');
-    const navLinks = document.querySelector('.nav-links');
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('nav-active');
-        hamburger.classList.toggle('toggle');
-    });
-    // Close menu when a link is clicked
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('nav-active');
-            hamburger.classList.remove('toggle');
-        });
-    });
+document.addEventListener('DOMContentLoaded', function () {
+    const generateBtn = document.getElementById('generate-btn');
+    const userInput = document.getElementById('prompt-input');
+    const resultBox = document.getElementById('gemini-result');
 
-    // --- DARK MODE TOGGLE ---
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
-    darkModeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-    });
-
-    // --- TIKTOK DOWNLOADER ---
-    const downloadBtn = document.getElementById('tiktok-download-btn');
-    const urlInput = document.getElementById('tiktok-url');
-    const resultDiv = document.getElementById('downloader-result');
-
-    downloadBtn.addEventListener('click', () => {
-        const videoUrl = urlInput.value.trim();
-        if (videoUrl) {
-            downloadTikTokVideo(videoUrl);
-        } else {
-            resultDiv.innerHTML = `<p style="color: red;">Please paste a TikTok URL first.</p>`;
-        }
-    });
-
-    async function downloadTikTokVideo(url) {
-        // --- IMPORTANT! GET YOUR KEY ---
-        // 1. Go to a site like RapidAPI.com and search for "TikTok Downloader".
-        // 2. Subscribe to a free API.
-        // 3. Get your 'X-RapidAPI-Key' and paste it below.
-        const apiKey = 'AIzaSyDPO1sHoIozWOOx5Ie2qE6OH-7LKI0f228'; // <-- PASTE YOUR KEY HERE
-
-        // This example uses the "TikTok Video Downloader" API from RapidAPI
-        const apiHost = 'tiktok-video-downloader-unofficial.p.rapidapi.com';
-        const apiUrl = `https://tiktok-video-downloader-unofficial.p.rapidapi.com/getVideo?url=${encodeURIComponent(url)}`;
-        
-        if (apiKey === 'YOUR_API_KEY_HERE') {
-            resultDiv.innerHTML = `<p style="color: orange;">API Key is missing. Please add it in the script.js file.</p>`;
+    generateBtn.addEventListener('click', async () => {
+        const prompt = userInput.value.trim();
+        if (!prompt) {
+            resultBox.innerHTML = `<p style="color:red;">Please enter a prompt.</p>`;
             return;
         }
 
-        // Show loading message
-        resultDiv.innerHTML = `<p>Fetching video, please wait...</p>`;
-        downloadBtn.disabled = true;
+        resultBox.innerHTML = `<p>Generating response, please wait...</p>`;
+        generateBtn.disabled = true;
+
+        const apiKey = 'AIzaSyDPO1sHoIozWOOx5Ie2qE6OH-7LKI0f228'; // Gemini Pro API key
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
+
+        const body = {
+            contents: [{ parts: [{ text: prompt }] }]
+        };
 
         try {
-            const response = await fetch(apiUrl, {
-                method: 'GET',
+            const response = await fetch(endpoint, {
+                method: 'POST',
                 headers: {
-                    'X-RapidAPI-Key': apiKey,
-                    'X-RapidAPI-Host': apiHost
-                }
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body)
             });
 
             const data = await response.json();
+            const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response received.';
 
-            if (data.status === 'success' && data.video_url) {
-                // Display the video and download button
-                resultDiv.innerHTML = `
-                    <p><strong>Video Found!</strong></p>
-                    <video controls src="${data.video_url}"></video>
-                    <a href="${data.video_url}" download="tiktok_video.mp4">Download Video</a>
-                `;
-            } else {
-                // Handle API errors
-                resultDiv.innerHTML = `<p style="color: red;">Error: ${data.message || 'Could not fetch video.'}</p>`;
-            }
-
+            resultBox.innerHTML = `<p><strong>Gemini:</strong> ${text}</p>`;
         } catch (error) {
-            // Handle network errors
             console.error('Error:', error);
-            resultDiv.innerHTML = `<p style="color: red;">An error occurred. Please check the console for details.</p>`;
+            resultBox.innerHTML = `<p style="color:red;">An error occurred. See console for details.</p>`;
         } finally {
-            downloadBtn.disabled = false;
+            generateBtn.disabled = false;
         }
-    }
-
-    // --- OTHER FEATURES (Back to top, Contact Form) ---
-    // These remain the same
-    const backToTopButton = document.getElementById("back-to-top-btn");
-    window.onscroll = function() { /* ... */ };
-    backToTopButton.addEventListener('click', () => { /* ... */ });
-    const form = document.querySelector('form');
-    form.addEventListener('submit', function(e) { /* ... */ });
+    });
 });
