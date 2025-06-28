@@ -1,6 +1,28 @@
+/* =================================== */
+/* CSS VARIABLES FOR THEMES            */
+/* =================================== */
+:root {
+    --background-color: #f4f4f4;
+    --text-color: #333;
+    --card-background: #fff;
+    --primary-button-color: #007BFF;
+    --header-footer-bg: #333;
+    --header-footer-text: #fff;
+}
+
+body.dark-mode {
+    --background-color: #121212;
+    --text-color: #e0e0e0;
+    --card-background: #1e1e1e;
+    --primary-button-color: #bb86fc;
+    --header-footer-bg: #1e1e1e;
+    --header-footer-text: #e0e0e0;
+}
+
+
 /* General Body Styles */
 html {
-    scroll-behavior: smooth; /* Enables smooth scrolling for the whole page */
+    scroll-behavior: smooth;
 }
 
 body {
@@ -8,21 +30,23 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
 }
 
 /* Header and Navigation */
 header {
-    background-color: #333;
-    color: #fff;
+    background-color: var(--header-footer-bg);
+    color: var(--header-footer-text);
     padding: 1rem 2rem; 
     display: flex; 
     justify-content: space-between; 
     align-items: center;
-    position: sticky; /* Makes the header stick to the top */
+    position: sticky;
     top: 0;
-    z-index: 100; /* Ensures header is above other content */
+    z-index: 100;
+    transition: background-color 0.3s;
 }
 
 header h1 {
@@ -42,23 +66,13 @@ header h1 {
 }
 
 .nav-links a {
-    color: #fff;
+    color: var(--header-footer-text);
     text-decoration: none;
     font-size: 1rem;
 }
 
-.hamburger-menu {
-    display: none; /* Hidden on desktop */
-    cursor: pointer;
-}
-
-.hamburger-menu div {
-    width: 25px;
-    height: 3px;
-    background-color: white;
-    margin: 5px 0;
-    transition: all 0.3s ease;
-}
+.hamburger-menu { display: none; cursor: pointer; }
+.hamburger-menu div { width: 25px; height: 3px; background-color: var(--header-footer-text); margin: 5px 0; transition: all 0.3s ease; }
 
 /* Main Content and Sections */
 main {
@@ -69,10 +83,47 @@ main {
 
 section {
     margin-bottom: 20px;
-    background: #fff;
+    background: var(--card-background);
     padding: 20px;
     border-radius: 8px;
+    transition: background-color 0.3s;
 }
+
+/* New Tools Section Styling */
+.tool-container {
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+.tool-container:first-child {
+    border-top: none;
+    margin-top: 0;
+    padding-top: 0;
+}
+.tool-container h3 {
+    margin-top: 0;
+}
+#dark-mode-toggle {
+    background-color: #888;
+}
+body.dark-mode #dark-mode-toggle {
+    background-color: var(--primary-button-color);
+}
+#text-to-copy {
+    background-color: #eee;
+    border: 1px solid #ccc;
+    color: #333;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+body.dark-mode #text-to-copy {
+    background-color: #333;
+    border-color: #555;
+    color: #eee;
+}
+
 
 /* Form Styling */
 input[type="text"],
@@ -84,112 +135,40 @@ textarea {
     margin-bottom: 10px;
     border-radius: 4px;
     border: 1px solid #ddd;
+    background-color: var(--card-background);
+    color: var(--text-color);
 }
 
 button {
-    background-color: #333;
+    background-color: #555;
     color: #fff;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+button:hover { background-color: #777; }
+#contact button[type="submit"] {
+    background-color: var(--primary-button-color);
 }
 
-button:hover {
-    background-color: #555;
-}
 
 /* Back to Top Button */
-#back-to-top-btn {
-    display: none; 
-    position: fixed;
-    bottom: 20px;
-    right: 30px;
-    z-index: 99;
-    font-size: 18px;
-    border: none;
-    outline: none;
-    background-color: #555;
-    color: white;
-    cursor: pointer;
-    padding: 15px;
-    border-radius: 50%; 
-    width: 50px;
-    height: 50px;
-}
-
-#back-to-top-btn:hover {
-    background-color: #007BFF;
-}
-
+#back-to-top-btn { display: none; position: fixed; bottom: 20px; right: 30px; z-index: 99; font-size: 18px; border: none; outline: none; background-color: #555; color: white; cursor: pointer; padding: 15px; border-radius: 50%; width: 50px; height: 50px; }
+#back-to-top-btn:hover { background-color: var(--primary-button-color); }
 
 /* Footer */
-footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #333;
-    color: #fff;
-}
+footer { text-align: center; padding: 20px; background-color: var(--header-footer-bg); color: var(--header-footer-text); transition: background-color 0.3s; }
 
-
-/* =================================== */
-/* RESPONSIVE DESIGN (MOBILE)          */
-/* =================================== */
+/* RESPONSIVE DESIGN (MOBILE) */
 @media screen and (max-width: 768px) {
-    body.nav-open {
-        overflow: hidden; /* Prevent scrolling when mobile menu is open */
-    }
-
-    .nav-links {
-        /* This is the container for the 3 buttons */
-        position: fixed;
-        top: -100px; /* Start hidden above the screen */
-        left: 0;
-        width: 100%;
-        background-color: #444; /* A slightly different background */
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        display: flex;
-        justify-content: space-around; /* Evenly space the buttons */
-        padding: 15px 0;
-        transition: top 0.3s ease-in-out;
-        z-index: 90; /* Below the header but above content */
-    }
-    
-    .nav-links.nav-active {
-        top: 80px; /* Slide down to be visible just below the header */
-    }
-
-    .nav-links li {
-        margin: 0; /* Remove margin from list items */
-    }
-
-    /* This styles the links to look like buttons */
-    .nav-links a {
-        background-color: #007BFF;
-        color: white;
-        padding: 12px 20px;
-        border-radius: 5px;
-        text-decoration: none;
-        font-weight: bold;
-        transition: background-color 0.2s ease;
-    }
-
-    .nav-links a:hover {
-        background-color: #0056b3;
-    }
-    
-    .hamburger-menu {
-        display: block; /* Show hamburger on mobile */
-    }
-    
-    /* This animates the hamburger icon into an 'X' */
-    .hamburger-menu.toggle .line1 {
-        transform: rotate(-45deg) translate(-5px, 6px);
-    }
-    .hamburger-menu.toggle .line2 {
-        opacity: 0;
-    }
-    .hamburger-menu.toggle .line3 {
-        transform: rotate(45deg) translate(-5px, -6px);
-    }
+    .nav-links { position: fixed; top: -110px; left: 0; width: 100%; background-color: #444; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: flex; justify-content: space-around; padding: 10px 0; transition: top 0.3s ease-in-out; z-index: 90; flex-wrap: wrap; }
+    .nav-links.nav-active { top: 80px; }
+    .nav-links li { margin: 5px; }
+    .nav-links a { background-color: var(--primary-button-color); color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none; font-weight: bold; }
+    .hamburger-menu { display: block; }
+    .hamburger-menu.toggle .line1 { transform: rotate(-45deg) translate(-5px, 6px); }
+    .hamburger-menu.toggle .line2 { opacity: 0; }
+    .hamburger-menu.toggle .line3 { transform: rotate(45deg) translate(-5px, -6px); }
 }
