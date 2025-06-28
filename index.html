@@ -11,7 +11,12 @@
     <header>
         <h1>Welcome to My Website</h1>
         <nav>
-            <ul>
+            <div class="hamburger-menu">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -22,13 +27,14 @@
     <main>
         <section id="home">
             <h2>Home</h2>
-            <p>This is the main content area of my web page. Welcome!</p>
+            <p>This is the main content area of my web page. Welcome! We've now added some new features. The navigation bar is now responsive and you'll see a 'Back to Top' button when you scroll down.</p>
+            <p style="padding-bottom: 500px;">(Some extra content here to make the page long enough to scroll.)</p>
         </section>
 
         <section id="about">
             <h2>About Me</h2>
             <p>Here is a little bit of information about myself and the purpose of this website.</p>
-            <img src="https://via.placeholder.com/400x200" alt="A placeholder image">
+            <img src="https://via.placeholder.com/400x200" alt="A placeholder image" style="max-width: 100%; height: auto;">
         </section>
 
         <section id="contact">
@@ -44,6 +50,8 @@
             </form>
         </section>
     </main>
+    
+    <button id="back-to-top-btn" title="Go to top">&uarr;</button>
 
     <footer>
         <p>&copy; 2025 My Website. All rights reserved.</p>
