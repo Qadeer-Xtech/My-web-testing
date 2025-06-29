@@ -2,57 +2,111 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Gemini Pro Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Text-to-Image Generator</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background: #f9f9f9;
-        }
+    body {
+        font-family: Arial, sans-serif;
+        background: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+        background-color: #8B5A2B;
+        color: white;
+        text-align: center;
+        padding: 20px;
+    }
 
-        .container {
-            max-width: 600px;
-            margin: auto;
-        }
+    .container {
+        max-width: 500px;
+        margin: auto;
+        padding: 20px;
+        background: #654321;
+        border: 10px solid #4E342E;
+        border-radius: 10px;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+    }
 
-        input, button {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            font-size: 16px;
-        }
+    input {
+        width: 80%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+    }
 
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+    button {
+        background: #FFD700;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
 
-        button:disabled {
-            background-color: #aaa;
-            cursor: not-allowed;
-        }
+    button:hover {
+        background: #FFA500;
+    }
 
-        #gemini-result {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-top: 10px;
-            border-radius: 5px;
-            white-space: pre-wrap;
-        }
+    #imageContainer img {
+        margin-top: 20px;
+        max-width: 100%;
+        border: 5px solid #8B4513;
+    }
+
+    #logo {
+        display: block;
+        margin: 0 auto;
+        width: 100px; /* Adjust size as needed */
+        height: auto;
+        border-radius: 10px; /* Optional: rounded edges */
+    }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Ask Gemini Pro (Demo)</h2>
-        <input type="text" id="prompt-input" placeholder="Enter your prompt..." />
-        <button id="generate-btn">Generate</button>
-        <div id="gemini-result"></div>
+        <img src="logo.png" alt="Logo" id="logo">
+        <h1>Qadeer Image Generator</h1>
+        <input type="text" id="textInput" placeholder="Enter your text">
+        <button id="generateBtn">Generate Image</button>
+        <div id="imageContainer"></div>
+        <button id="downloadBtn" style="display: none;">Download Image</button>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+    document.getElementById("generateBtn").addEventListener("click", function () {
+        let text = document.getElementById("textInput").value;
+        if (text.trim() === "") {
+            alert("❌ Please enter some text!");
+            return;
+        }
+
+        let apiUrl = `https://api-xx-xi.hf.space/api/text2img?prompt=${encodeURIComponent(text)}`;
+
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Server Error! Failed to fetch image.");
+                }
+                return response.blob();
+            })
+            .then(imageBlob => {
+                let imageUrl = URL.createObjectURL(imageBlob);
+                document.getElementById("imageContainer").innerHTML = `<img id="generatedImg" src="${imageUrl}" alt="Generated Image">`;
+
+                // Show download button
+                let downloadBtn = document.getElementById("downloadBtn");
+                downloadBtn.style.display = "block";
+                downloadBtn.onclick = function () {
+                    let link = document.createElement("a");
+                    link.href = imageUrl;
+                    link.download = "generated-image.png";
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                };
+            })
+            .catch(error => {
+                console.error("❌ Error fetching image:", error);
+                alert("⚠️ Failed to generate image. Please try again later.");
+            });
+    });
+    </script>
 </body>
 </html>
